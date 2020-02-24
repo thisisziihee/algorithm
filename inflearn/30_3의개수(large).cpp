@@ -16,7 +16,7 @@
 
 int main() {
 	int n;
-	scanf("%d %d", &n, &k);
+	scanf("%d", &n);
 		// 자릿수(cur)를 기준으로 right(나머지부분), left(몫 부분)
 	int left = 1, right, cur, k = 1, ans = 0;
 	while (left != 0) {
@@ -26,8 +26,8 @@ int main() {
 
 			// 만약 12345 이면 온전하게 12300~12345를 가져갈 수 없음.  
 			// 300 ~ 11300 을 온전하게 가져가고 나머지 12300 ~12345 에 대해서 처리
-		if (cur > k) { ans = ans + ((left + 1)*k); }
-		else if (cur == k) { ans = ans + (left*k) + (right + 1); }
+		if (cur > 3) { ans = ans + ((left + 1)*k); }
+		else if (cur == 3) { ans = ans + (left*k) + (right + 1); }
 			// 3보다 작은 경우 1000의 자리는 10000의 자리 개수만큼 있음 12345 -> 03000~ 03999
 		else { ans = ans + (left *k); }
 		k = k * 10;
