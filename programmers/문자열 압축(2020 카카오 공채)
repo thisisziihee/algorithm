@@ -1,0 +1,50 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = s.length();
+    string result = "";
+    string temp = "";
+    int cnt = 1;
+    
+    if(s.length() == 1) return 1;
+
+    // i : 문자열 압축 단위
+    for (int i = 1; i <= (s.length() / 2); i++) {
+        result = "";
+        // 비교 문자열
+        temp = s.substr(0, i);
+       
+       // 비교 문자열 시작 위치 j, 끝 위치 j+i
+        for (int j = i; j <= s.length(); j+=i) {
+            // 두 문자열이 일치하면 중복 카운트 +1
+            if (temp == s.substr(j, i)) cnt++;
+
+            else {
+                // 두 문자열이 서로 다르다면 기존 문자열은 보내줘야 함
+                // 기존 문자열이 1번만 나오면 숫자 안쓰고, 그 이상이면 문자열 앞에 숫자 추가
+                if (cnt == 1) result = result + temp;
+                else {
+                    result = result + to_string(cnt) + temp;
+                    cnt = 1;
+                }
+            }
+            
+            // 만약 비교하려는 다음 문자열이 i보다 길이가 짧은 경우, 길이가 달라 비교할 수 없으므로 여기서 마무리함
+            // cnt == 1이면 어차피 위의 else 구문에서 문자열을 result에 추가했기 때문에, 버퍼에 남은 문자열만 넣음
+            // cnt > 1 이면, 아직 temp를 정리하지 못했으므로 temp, cnt를 추가하고 버퍼에 남은 문자열도 추가
+            if (j + i > s.length()) {
+                if (cnt == 1) { result = result + s.substr(j); }
+                else { result = result + to_string(cnt) + temp + s.substr(j);}
+                break;
+            }
+            
+            // 비교 문자열 갱신
+            temp = s.substr(j, i);
+        }
+        answer = (answer > result.length() ? result.length() : answer);
+    }
+    return answer;
+}
