@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+#include <stdio.h>
+#include <algorithm>
+
+using namespace std;
+
+    // a b 값을 바꿔야 하는지 확인
+bool whoIsBigger(string &a, string &b){
+    return ( a+b < b+a ? true : false );
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+    vector <string> v;
+    int i;
+    for(i=0;i<numbers.size(); i++){
+        v.push_back(to_string(numbers[i]));
+    }
+    
+    // 비교함수 이용
+    sort(v.begin(), v.end(), whoIsBigger);
+    
+    while(!v.empty()){
+        answer += v.back();
+        v.pop_back();
+    }
+    
+    if (answer[0] == '0') answer = "0";
+    
+    return answer;
+}
