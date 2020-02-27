@@ -1,0 +1,15 @@
+#include <algorithm>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+vector<int> solution(vector<int> arr) {
+    vector<int> answer = arr;
+        // 배열에서 가장 작은 수
+    int minn = *min_element(answer.begin(), answer.end());
+        // minn 값이 위치한 인덱스
+    int pos = find(answer.begin(), answer.end(), minn) - answer.begin();
+    answer.erase(answer.begin()+pos);
+    if(answer.size() == 0)answer.push_back(-1);
+    return answer;
+}
