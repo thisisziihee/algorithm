@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+using namespace std;
+
+// 대문자 65 90 소문자 97 122
+string solution(string s, int n) {
+    int i, start, end;
+    for(i = 0; s[i]!='\0';i++){
+        if(s[i]>=65 && s[i]<=90){ 
+            start = 65;
+            end =90;
+        }
+        else if(s[i]>=97 && s[i] <=122){
+            start = 97;
+            end=122;
+        }
+        else{
+            continue;    
+        }
+        
+        if(s[i] + n > 127){
+            s[i] = start + n -(end - s[i])-1;
+        }
+        else{
+            s[i] = s[i] + n;
+            if(s[i] > end){
+                s[i] = start + (s[i]-end-1);
+            }
+        }
+    }
+    return s;
+}
