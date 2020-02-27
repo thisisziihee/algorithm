@@ -1,0 +1,16 @@
+#include <string>
+#include <vector>
+#include <stdio.h>
+using namespace std;
+
+vector<int> solution(int n, int m) {
+    vector<int> answer;
+    for(int i = (n > m ? m:n);i >= 1;i--){
+        if(m%i==0 && n%i==0) {
+            answer.push_back(i);
+            answer.push_back( ((n*m)/i) );
+            break;
+        }
+    }
+    return answer;
+}
