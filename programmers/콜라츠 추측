@@ -1,0 +1,20 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int num) {
+        // 값이 오버플로우 돼서 값이 바뀔 수 있으니 더 큰 범위를 갖도록 해야함
+    unsigned long long val = num;
+    int answer = 0;
+    
+    while(true){
+        if(val == 1) break;
+        if(answer > 500) { answer = -1; break; }
+        if(val%2==0) val = val/2;
+        else val = (val*3)+1;
+        answer++;
+    }
+    
+    return answer;
+}
