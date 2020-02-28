@@ -1,0 +1,13 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+bool solution(int x) {
+    int temp = x, num = 0;
+    while(temp > 0){
+        num += temp%10;
+        temp = temp/10;
+    }
+    return (x%num == 0);
+}
