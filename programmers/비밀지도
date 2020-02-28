@@ -1,0 +1,22 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+    string temp = "";
+    int i, j;
+    
+    for(i =0;i<n;i++){
+        arr1[i] = arr1[i] | arr2[i];
+        temp = "";
+        for(j = 0; j <n;j++){
+            if(arr1[i]%2 ==0) temp = ' '+temp;
+            else temp = '#' + temp;
+            arr1[i] = arr1[i]/2;
+        }
+        answer.push_back(temp);
+    }
+    return answer;
+}
