@@ -1,0 +1,39 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+
+vector<int> solution(int N, vector<int> stages) {
+    vector<int> answer;
+    
+    vector<float> stageReach(N+1);
+    vector<float> stageFail(N+1);
+    
+    int i, j;
+    for(i=0; i<stages.size(); i++){
+        for(j = 1; j<=stages[i]; j++){
+            if(j == N+1) continue;
+            stageReach[j]++;
+        }
+        if(stages[i] == N+1) continue;
+        stageFail[stages[i]]++;
+    }
+    
+    vector<float> failure(N+1);
+    for (i =1; i <= N; i++){
+        if(stageReach[i] == 0) failure[i] = 0;
+        else {failure[i] = stageFail[i] / stageReach[i];}
+    }
+    
+    float maxx; 
+    int pos;
+    failure[0] = -1;
+    for(i = 1;i<=N;i++){
+        maxx = *max_element(failure.begin(), failure.end());
+        pos = find(failure.begin(), failure.end(), maxx)-failure.begin();
+        answer.push_back(pos);
+        failure[pos] = -1;
+    }
+    return answer;
+}
