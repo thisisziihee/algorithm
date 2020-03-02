@@ -1,0 +1,35 @@
+#include <string>
+#include <vector>
+#include <queue>
+using namespace std;
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+    vector<int> answer;
+    queue<int> left;
+    queue<int> q;
+    int day, count = 0;
+    
+    for(int i =0;i<progresses.size(); i++){
+        q.push(i);
+        left.push(100 - progresses[i]);
+    }
+    
+    for(day = 1;; day++){
+        if(q.size() == 0 && left.size() == 0){
+            break;
+        }
+        while(q.size() != 0 && left.size() != 0){
+            if (day * (speeds[q.front()]) >= left.front() ){
+                count++;
+                q.pop();
+                left.pop();
+            }
+            else break;
+        }
+        if(count != 0){
+            answer.push_back(count);
+            count = 0;
+        }
+    }
+    return answer;
+}
