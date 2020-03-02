@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+#include <stack>
+#include <iostream>
+using namespace std;
+
+vector<int> solution(vector<int> heights) {
+    vector<int> answer;
+    stack<int> queue, temp;
+    int i;
+    
+    for(i = 0; i<heights.size(); i++){
+        while(true){
+            if(temp.size()==0){
+                answer.push_back(0);
+                break;
+            }
+            if(heights[temp.top()] > heights[i]){
+                answer.push_back(temp.top()+1);
+                temp.pop();
+                break;
+            }
+            else temp.pop();
+        }
+        queue.push(i);
+        temp = queue; 
+    }
+    return answer;
+}
