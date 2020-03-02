@@ -1,0 +1,14 @@
+using namespace std;
+
+long long solution(int w,int h)
+{
+	long long answer = (long long)w * (long long)h;
+    long long gcd;
+    for(gcd = (w > h? h : w); gcd>=1; gcd--){
+        if(w%gcd==0 && h%gcd==0){
+            break;
+        }
+    }
+    answer -= gcd * ((h/gcd) + (w/gcd) - 1);
+	return answer;
+}
