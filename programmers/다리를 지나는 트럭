@@ -1,0 +1,45 @@
+#include <string>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int solution(int bridge_length, int weight, vector<int> truck_weights) {
+    int answer = 0;
+    queue<int> entered_times, bridge;
+    int total_weight = 0;
+    int time = 1;
+    
+    for(time = 1;; time++){ // 경과 시간은 계속 흐르게 함
+        
+        // 다리를 건너는 트럭이 하나라도 있는 경우
+        if(entered_times.size() > 0){
+            
+            // 현재 시간 - 다리 진입 시간 == 다리 길이 -> 다리를 모두 건넌 경우
+            if(time - entered_times.front() == bridge_length){
+                total_weight -= bridge.front();
+                entered_times.pop();
+                bridge.pop();
+                
+                // 대기 트럭도 없고, 다리를 건너고 있는 트럭도 없는 경우
+                if(bridge.size() == 0 && truck_weights.size() == 0){
+                    return time;
+                }
+            }
+        }
+        
+        while(true){
+            
+            // 다리에 진입하면 무게 초과인 경우 혹은 대기 트럭이 없는 경우
+            if(total_weight + truck_weights.front() > weight || truck_weights.size() == 0 ) {
+                break;
+            }
+            
+            // 트럭을 다리로 진입시킨다.
+            bridge.push(truck_weights.front());
+            entered_times.push(time);
+            total_weight += truck_weights.front();
+            truck_weights.erase(truck_weights.begin());
+            break;
+        }
+    }
+}
