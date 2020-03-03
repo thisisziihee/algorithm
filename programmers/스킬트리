@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+using namespace std;
+
+int solution(string skill, vector<string> skill_trees) {
+    int answer = skill_trees.size();
+    int i, j, skill_index = 0, temp_index;
+    string temp = "";
+    
+    for(i=0;i<skill_trees.size();i++){
+        temp = skill_trees[i];
+        skill_index = 0;
+        for(j=0; temp[j] !='\0'; j++){
+            temp_index = skill.find(temp[j]);
+            if( temp_index != -1 ){
+                if(skill[skill_index] == skill[temp_index]){
+                    skill_index += 1;
+                }
+                else{
+                    answer -= 1;
+                    break;
+                }
+            }
+        }
+    }
+    return answer;
+}
