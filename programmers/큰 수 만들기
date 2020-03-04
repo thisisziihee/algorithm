@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string number, int k) {
+    string answer = "";
+    int answer_length = number.length() - k;
+    int i, j;
+    int max_value, max_index;
+    
+    for(i=answer_length; i>0; i--){
+        max_value = max_index = 0;
+        for(j = 0; j < number.length()-i+1; j++){
+            if(max_value < number[j]){
+                max_value = number[j];
+                max_index = j;
+            }
+        }
+        answer += max_value;
+        number.replace(0,max_index+1, " ");
+    }
+    return answer;
+}
