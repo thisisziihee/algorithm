@@ -1,0 +1,41 @@
+#include <string>
+#include <vector>
+using namespace std;
+
+int solution(string name) {
+    int answer = 0;
+    string temp = string(name.length(), 'A');
+    int index = 0, len = name.length();
+    
+    while(true){ 
+        // A에서 올라가는게 빠른지, Z에서 내려가는게 빠른지 확인
+        if(name[index] >= 'A' && name[index] <= 'M') answer += name[index] - 'A';
+        else answer += ('Z'+1-name[index]);
+        
+        temp[index] = name[index];
+        
+        // temp와 name이 일치하면 모두 글자 확인한 것이므로 while문 탈출
+        if(temp == name)  break;
+        
+        // 아직 temp, name 일치하지 않는다면
+        // 현재 위치 index를 기준으로 오른쪽 문자와 왼쪽 문자 중에 누가 먼저 'A' 아닌 문자를 만나는지 확인
+        else{    
+            int left, right, i;
+            for(i = 1; i < len; i++){
+                left = (index - i + len) % len;
+                right = (index + i + len) % len;
+                if(name[right] != 'A' && name[right] != temp[right]) {
+                    index = right;
+                    answer += i;
+                    break;
+                }
+                if(name[left] != 'A' && temp[left] != name[left]){
+                    index = left;
+                    answer += i;
+                    break;
+                }
+            }
+        }
+    }
+    return answer;
+}
