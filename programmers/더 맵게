@@ -1,0 +1,36 @@
+#include <string>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int solution(vector<int> scoville, int K) {
+    int answer = 0;
+    priority_queue<int, vector<int>, greater<int> > minSco (scoville.begin(), scoville.end());
+    int first, second;
+    
+    while(true){
+        // minSco 길이가 2 이상이고 K 넘음 -> 탈출
+        if( minSco.size() > 1 && minSco.top() >= K) break;
+        
+        // minSco 길이가 1인데 K 넘음 -> 탈출
+        // minSco 길이가 1인데 K 안넘음 -> 절대 넘을 수 없음
+        if(minSco.size() == 1){
+            if(-minSco.top() >= K) answer += 1;
+            else answer = -1;
+            break;
+        }
+        
+        // 아직 K 안넘는 원소 있음 -> 계속 섞어줌
+        first = minSco.top();
+        minSco.pop();
+        second = minSco.top();
+        minSco.pop();
+        minSco.push(first + second*2);
+        answer += 1;
+        
+        if(minSco.top() >= K) break;
+    }
+    
+    return answer;
+}
