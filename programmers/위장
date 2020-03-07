@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+#include <map>
+using namespace std;
+
+int solution(vector<vector<string>> clothes) {
+    int answer = 1;
+    map<string, int> hash;
+    
+    // 의상의 종류를 기준으로 카운팅 
+    // hash -> first : 의상 종류 second : 개수
+    for(int i =0;i <clothes.size(); i++) {
+        hash[clothes[i][1]] += 1;
+    }
+    
+    // 의상 종류 개수 + 1(안입는 경우)
+    // 상의, 하의, 겉옷, 얼굴 서로 독립적이기 때문에 서로 곱함
+    for(auto i = hash.begin(); i != hash.end(); i++){
+        answer = answer * (i->second + 1);
+    }
+    
+    // 아무것도 안입는 경우를 뺀다.
+    return answer-1;
+}
