@@ -1,0 +1,26 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<int> number;
+int targett, answer = 0;
+
+void dfs(int index, int res){
+    if(index == number.size()){
+        if(res == targett) {
+            answer += 1;
+        }
+    }
+    else{
+        dfs(index + 1, res + number[index]);
+        dfs(index + 1, res - number[index]); 
+    }
+}
+
+int solution(vector<int> numbers, int target) {
+    targett = target;
+    number = numbers;
+    dfs(0, 0);
+    return answer;
+}
