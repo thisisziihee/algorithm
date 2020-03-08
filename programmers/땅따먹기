@@ -1,0 +1,23 @@
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int solution(vector<vector<int> > land)
+{
+    int answer = 0;
+    int i, j, k, maxx = 0;
+    for (i = 1; i < land.size(); i++){
+        // land[i] 누적 값을 채우기 위해 land[i-1] 배열 탐색
+        for(j = 0; j <4; j++){
+            // land[i][j] 값을 찾기 위해 land[i-1] 에서 j 빼고 최대값 탐색
+            maxx = 0;
+            for( k = 0; k <4; k++){
+                if(j == k) continue;
+                maxx = (maxx > land[i-1][k] ? maxx : land[i-1][k]);
+            }
+            land[i][j] += maxx;
+        }
+    }
+    answer = *max_element(land[i-1].begin(), land[i-1].end());
+    return answer;
+}
