@@ -1,0 +1,23 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<int> solution(int brown, int red) {
+    vector<int> answer;
+    int i, red_garo, red_sero;
+    
+    for(i = 1;i <= red; i++){
+        if(red % i==0 && red/i >= i){
+            red_garo = red/i; 
+            red_sero = i;
+            
+            if( (red_garo+2)*(red_sero+2) - red == brown ){
+                answer.push_back(red_garo+2);
+                answer.push_back(red_sero+2);
+                break;
+            }
+        }
+    }
+    return answer;
+}
