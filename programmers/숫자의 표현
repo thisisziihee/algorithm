@@ -1,0 +1,17 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n) {
+    int answer = 0;
+    int a = n;
+    int b = 1;
+    a -= 1;
+    while(a>0){
+        b += 1;
+        a = a-b;
+        if(a%b == 0) answer += 1;
+    }
+    return answer+1;
+}
