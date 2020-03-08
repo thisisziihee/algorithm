@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n) {
+    int answer = 0;
+    int n_one_cnt = 0, temp = n;
+    
+    while(temp > 0){
+        if(temp%2 == 1) n_one_cnt += 1;
+        temp = temp/2;
+    }
+    
+    int temp_one_cnt;
+    int num = n;
+    
+    while(true){
+        temp_one_cnt = 0;
+        num += 1;
+        temp = num;
+        while(temp > 0){
+            if(temp%2 == 1) temp_one_cnt += 1;
+            temp = temp/2;
+        }
+        if(temp_one_cnt == n_one_cnt){
+            return num;
+        }
+    }
+    return answer;
+}
