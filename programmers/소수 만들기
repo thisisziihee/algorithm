@@ -1,0 +1,30 @@
+#include <vector>
+using namespace std;
+
+int answer = 0;
+vector<int> value;
+
+void dfs(int index, int sum, int level){
+    if(level == 3){
+        int flag = 0;
+        for(int i = 2; i*i<=sum; i++){
+            if(sum%i == 0) {
+                flag = 1;
+                break;
+            }
+        }
+        if(flag == 0) answer += 1;
+        return;
+    }
+    if(index == value.size()) return;
+    else{
+        dfs(index + 1, sum + value[index], level + 1);
+        dfs(index + 1, sum, level);
+    }
+}
+
+int solution(vector<int> nums) {
+    value = nums;
+    dfs(0, 0, 0);
+    return answer;
+}
