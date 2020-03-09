@@ -1,0 +1,27 @@
+#include <queue>
+
+using namespace std;
+
+int get_lcm(int a, int b){
+    int gcd = a>b? b:a;
+    for(; gcd >0; gcd--){
+        if(a%gcd==0 && b%gcd==0){
+            break;
+        }
+    }
+    return gcd*(a/gcd)*(b/gcd);
+}
+
+int solution(vector<int> arr) {
+    queue<int> lcm;
+    for(int i =0; i<arr.size(); i++) lcm.push(arr[i]);
+    
+    while(lcm.size() != 1){
+        int first = lcm.front();
+        lcm.pop();
+        int second = lcm.front();
+        lcm.pop();
+        lcm.push(get_lcm(first, second));
+    }
+    return lcm.front();
+}
