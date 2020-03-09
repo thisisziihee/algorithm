@@ -1,0 +1,21 @@
+#include <string>
+#include <stack>
+
+using namespace std;
+
+int solution(string s)
+{
+    stack<char> str;   
+    str.push(s[0]);
+    int index = 1;
+    
+    while( index < s.length()){
+        if(str.size() == 0) str.push(s[index]);
+        else if(str.top() == s[index]) str.pop();
+        else str.push(s[index]);
+        index += 1;
+    }
+    
+    if(str.empty()) return 1;
+    else return 0;
+}
