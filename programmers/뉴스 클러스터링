@@ -1,0 +1,45 @@
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int solution(string str1, string str2) {
+    int answer = 0;
+    int i = 0;
+    string temp = "";
+    vector<string> str1_arr;
+    vector<string> str2_arr;
+    
+    std::transform(str1.begin(), str1.end(),str1.begin(), (int(*)(int))tolower);
+    std::transform(str2.begin(), str2.end(),str2.begin(), (int(*)(int))tolower);
+    
+    for(i = 0; i<str1.length()-1; i++){
+        if ((str1[i] >= 97 && str1[i] <= 122) && (str1[i+1] >= 97 && str1[i+1] <= 122)) {
+            temp = str1.substr(i, 2);
+            str1_arr.push_back(temp);
+        }
+    }
+    
+    for(i = 0; i < str2.length()-1; i++){
+        if ((str2[i] >= 97 && str2[i] <= 122) && (str2[i+1] >= 97 && str2[i+1] <= 122)){
+            temp = str2.substr(i, 2);
+            str2_arr.push_back(temp);
+        }
+    }
+    
+    if(str1_arr.size() == 0 && str2_arr.size() == 0) return 65536;
+    
+    int uunion = str1_arr.size() + str2_arr.size();
+    int freq = 0;
+    for(auto i = str1_arr.begin(); i!=str1_arr.end(); i++){
+        auto j = find(str2_arr.begin(), str2_arr.end(), *i);
+        if( j != str2_arr.end()){
+            str2_arr.erase(j);
+            freq += 1;
+        } 
+    }
+    if(freq == 0) return 0;
+    uunion = uunion - freq;
+    answer = floor(((double)freq/uunion) * 65536);
+    return answer;
+}
