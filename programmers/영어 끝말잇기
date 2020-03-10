@@ -1,0 +1,38 @@
+#include <string>
+#include <vector>
+#include <map>
+#include <cmath>
+
+using namespace std;
+
+vector<int> solution(int n, vector<string> words) {
+    vector<int> answer;
+    map <string, int> check;
+    
+    int word_index = 0;
+    string pre_word = words[word_index];
+    check[pre_word] += 1;
+    string now = "";
+    
+    while(true){
+        word_index += 1;
+        if(word_index == words.size()) break;
+        now = words[word_index];
+        
+        if(now.length() == 0 || pre_word[pre_word.length()-1] != now[0] || check[now] != 0){
+            // 한 글자 단어
+            // 이전 단어의 끝글자와 현재 단어의 앞글자가 맞지 않는 경우
+            // 이전 단어들과의 중복
+            answer.push_back(word_index % n + 1);
+            answer.push_back(ceil((double) (word_index + 1)/n));
+            return answer;
+        }
+        else{
+            check[now] += 1;
+        }
+        pre_word = now;
+    }
+    answer.push_back(0);
+    answer.push_back(0);
+    return answer;
+}
