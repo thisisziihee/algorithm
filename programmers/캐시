@@ -1,0 +1,53 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int solution(int cacheSize, vector<string> cities) {
+    int answer = 0;
+    if(cacheSize == 0) return cities.size()*5;
+    
+    vector<string> cache;
+    for(int i =0; i<cities.size(); i++){
+        std::transform(cities[i].begin(), cities[i].end(), cities[i].begin(), ::tolower);
+    }
+    int cities_index, cache_index;
+    int cache_cnt = 0;
+    
+    for(cities_index = 0; cities_index < cities.size(); cities_index ++){
+        
+        cache_index = -1;
+        for(int i = 0; i<cache.size(); i++){
+            if(cache[i] == cities[cities_index]){
+                cache_index = i;
+                break;
+            }
+        }
+        
+        // cache miss
+        if(cache_index == -1){
+            answer += 5;
+            // 캐시에 빈 공간이 있어서 들어갈 수 있음
+            if(cache_cnt < cacheSize){
+                cache_cnt += 1;
+                cache.push_back(cities[cities_index]);
+            }
+            // 캐시 꽉 차서 젤 처음에 들어온 거 버려야 들어갈 수 있음
+            else{
+                cache.erase(cache.begin());
+                cache.push_back(cities[cities_index]);
+            }
+        }
+        
+        // cache hit
+        else{
+            answer += 1;
+            // 캐시 히트한 문자열을 없애고 다시 뒤로 넣음
+            cache.erase(cache.begin()+cache_index);
+            cache.push_back(cities[cities_index]);
+        }
+    }
+    
+    return answer;
+}
