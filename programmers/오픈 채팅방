@@ -1,0 +1,47 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <map>
+using namespace std;
+
+struct User{
+    string uuid, cmd;
+    User(string a, string b){
+        uuid = a;
+        cmd = b;
+    }
+};
+
+vector<string> solution(vector<string> record) {
+    vector<string> answer;
+    vector<User> user;
+    map<string, string> user_list;
+    string command, nickname, userId;
+    
+    for(auto i : record){
+        int index = 0;
+        command = nickname = userId = "";
+        while(i[index] != ' ') command += i[index++];
+        index += 1;
+        while(i[index] != ' ' && i[index] != '\0') userId += i[index++];
+        index += 1;
+        while(i[index] !='\0') nickname += i[index++];
+        if(command == "Enter"){
+            user_list[userId] = nickname;
+            user.push_back(User(userId, "님이 들어왔습니다."));
+        }
+        else if (command == "Leave"){
+            user.push_back(User(userId, "님이 나갔습니다."));
+        }
+        else if (command == "Change"){
+            user_list[userId] = nickname;
+        }
+    }
+    
+    for( auto j : user){
+        string temp = user_list[j.uuid] + j.cmd;
+        answer.push_back(temp);
+    }
+    
+    return answer;
+}
