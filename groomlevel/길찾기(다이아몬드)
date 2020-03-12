@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	int diamond_garo, a = 1;
+	cin >> diamond_garo;
+
+	vector< vector<int> > diamond;
+	vector< vector<int> > max_path;
+	vector<int> temp;
+	int flag = 0;
+	int num;
+	while (a >= 1) {
+		cin >> num;
+		temp.push_back(num);
+		if (temp.size() == a) {
+			diamond.push_back(temp);
+			temp.clear();
+			
+			vector<int> temp(a, 0);
+			max_path.push_back(temp);
+			temp.clear();
+			
+			if (a == diamond_garo) flag = 1;
+			if (flag == 1) a--;
+			if (flag == 0) a++;
+		}
+	}
+	max_path[0][0] = diamond[0][0];
+	int max_value, i, j;
+	for (i = 1; i < diamond.size(); i++) {
+		for (j = 0; j < diamond[i].size(); j++) {
+			if (i < diamond_garo) {
+				if (j - 1 < 0) max_value = max_path[i - 1][j];
+				else if (max_path[i - 1].size() <= j) max_value = max_path[i - 1][j - 1];
+				else { max_value = max_path[i - 1][j] > max_path[i - 1][j - 1] ? max_path[i - 1][j] : max_path[i - 1][j - 1]; }
+			}
+			else {
+				max_value = max_path[i - 1][j] > max_path[i - 1][j + 1] ? max_path[i - 1][j] : max_path[i - 1][j + 1];
+			}
+			max_path[i][j] = diamond[i][j] + max_value;
+		}
+	}
+	cout << max_path[i-1][j-1] << endl;
+	return 0;
+}
