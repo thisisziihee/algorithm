@@ -1,0 +1,42 @@
+/*
+45656이란 수를 보자.
+
+이 수는 인접한 모든 자리수의 차이가 1이 난다. 이런 수를 계단 수라고 한다.
+세준이는 수의 길이가 N인 계단 수가 몇 개 있는지 궁금해졌다.
+N이 주어질 때, 길이가 N인 계단 수가 총 몇 개 있는지 구하는 프로그램을 작성하시오. (0으로 시작하는 수는 없다.)
+
+입력
+첫째 줄에 N이 주어진다. N은 1보다 크거나 같고, 100보다 작거나 같은 자연수이다.
+
+출력
+첫째 줄에 정답을 1,000,000,000으로 나눈 나머지를 출력한다
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int n;
+	cin >> n;
+
+	long int dy[101][10] = { 0 };
+	for (int i = 1; i <= 9; i++) dy[1][i] = 1;
+	
+	for (int i = 2; i <= n; i++) {
+		for (int j = 0; j <= 9; j++) {
+			if (j == 0) dy[i][j] = (dy[i - 1][1] % 1000000000);
+			else if (j == 9) dy[i][j] = dy[i - 1][8] % 1000000000;
+			else dy[i][j] = (dy[i - 1][j - 1] + dy[i - 1][j + 1]) % 1000000000;
+		}
+	}
+
+	long int ans = 0;
+	for (int i = 0; i <= 9; i++) {
+		ans += dy[n][i];
+	}
+	cout << ans % 1000000000 << endl;
+}
