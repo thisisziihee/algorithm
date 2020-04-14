@@ -24,7 +24,6 @@ void rotate(int wheel, int dir) {
 
 void solution(int wheel, int dir) {
 	visited[wheel] = true;
-
 	int prev = wheel - 1;
 	int next = wheel + 1;
 
